@@ -31,6 +31,12 @@ export const fields = {
       },
     ],
   },
+  functionalMode: {
+    choices: [
+      { value: 'major', label: 'Major' },
+      { value: 'minor', label: 'Minor' },
+    ],
+  },
   keyboard: {
     skin: {
       choices: [

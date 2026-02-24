@@ -47,6 +47,9 @@ export const defaultChordDisplaySettings: ChordDisplaySettings = {
   displayNotation: false,
   displayAltChords: true,
   displayIntervals: false,
+  displayFunctionalChord: false,
+  functionalKey: '',
+  functionalMode: 'major' as const,
   keyboard: defaultKeyboardSettings,
 };
 

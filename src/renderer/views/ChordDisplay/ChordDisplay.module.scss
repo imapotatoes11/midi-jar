@@ -78,6 +78,18 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   text-shadow: $View_ChordDisplay_textShadow;
 }
 
+// Functional chord symbol label (Roman numeral analysis)
+.functionalChord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4vh;
+  line-height: 1.2;
+  padding: 0.1em 5vw 0;
+  flex-shrink: 0;
+  text-shadow: $View_ChordDisplay_textShadow;
+}
+
 .name {
   font-size: 3vh;
   line-height: 2vh;

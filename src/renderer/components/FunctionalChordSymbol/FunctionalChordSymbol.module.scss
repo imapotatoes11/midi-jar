@@ -1,0 +1,93 @@
+@import 'tokens';
+
+// Container for the entire functional symbol widget
+.base {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+  position: relative;
+}
+
+// Optionally displayed key label ("Am:" prefix)
+.keyLabel {
+  font-size: 0.6em;
+  opacity: 0.55;
+  letter-spacing: 0.04em;
+}
+
+// The primary symbol button (transparent button for accessibility)
+.symbol {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15em;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: default;
+  outline: none;
+  line-height: 1;
+
+  &--placeholder {
+    opacity: 0.35;
+  }
+
+  &:not(.symbol--placeholder) {
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    border-radius: 0.15em;
+  }
+}
+
+.symbolText {
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+// Small chevron/toggle indicator when alternates exist
+.toggle {
+  font-size: 0.5em;
+  opacity: 0.6;
+  vertical-align: middle;
+  transition: transform 0.15s ease;
+  font-style: normal;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+// Dropdown panel listing alternate analyses
+.alts {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+
+  background: rgba($color-neutral-darker, 0.92);
+  border: 1px solid rgba($color-neutral-light, 0.2);
+  border-radius: 0.3em;
+  padding: 0.35em 0.6em;
+  min-width: 4em;
+  box-shadow: 0 4px 12px rgba($color-black, 0.4);
+}
+
+.altItem {
+  font-size: 0.75em;
+  opacity: 0.8;
+  font-style: italic;
+  white-space: nowrap;
+  cursor: default;
+}

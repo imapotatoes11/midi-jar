@@ -9,6 +9,7 @@
 }
 
 .name {
+  // Slightly reduced to keep extensions compact, but quality is boosted below.
   font-size: 0.9em;
   line-height: 1.5em;
 }
@@ -17,10 +18,16 @@
   font-weight: bold;
 }
 
+// UX TWEAK — major/minor distinction:
+// The quality token (e.g. "m", "°", "aug") is given a larger font-size
+// (1.1em within .name's 0.9em context = ~0.99em of base) so that "m" for
+// minor chords reads at near-tonic weight and is visually unambiguous
+// against a plain major root with no quality suffix.
 .quality {
   margin: 0.05em;
   font-weight: bold;
   font-style: italic;
+  font-size: 1.1em;  // boosted from implicit 1em to improve minor/dim readability
 }
 
 .extension {
@@ -30,15 +37,23 @@
   font-size: 0.8em;
 }
 
+// Quality-based modifier classes (set via `data-quality` attribute and CSS class)
+// These allow downstream themes/overlays to further style by quality if desired.
+// Currently they add no additional visual change beyond what the quality token provides,
+// but serve as hooks for future styling.
+.quality--major {}
+.quality--minor {}
+.quality--diminished {}
+.quality--augmented {}
+.quality--unknown {}
+
 .--highlighted {
   .quality {
-
     background: $color-danger-normal;
     border-radius: 0.1em;
   }
 
   .extension {
-
     background: $color-primary-normal;
     border-radius: 0.1em;
   }

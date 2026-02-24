@@ -63,8 +63,17 @@ export const ChordName: React.FC<ChordNameProps> = ({
   const tokens = tokenizeChordType(type);
   const [first, ...rest] = tokens;
 
+  // Derive a normalised quality class for styling major vs minor vs diminished.
+  // chord.quality values from @tonaljs: "Major", "Minor", "Diminished", "Augmented", "Unknown"
+  const qualityClass = chord.quality
+    ? `quality--${chord.quality.toLowerCase()}`
+    : 'quality--unknown';
+
   return (
-    <div className={cx('base', 'chord', highlightAlterations && '--highlighted', className)}>
+    <div
+      className={cx('base', 'chord', highlightAlterations && '--highlighted', qualityClass, className)}
+      data-quality={chord.quality?.toLowerCase()}
+    >
       <span className={cx('tonic', 'chord-tonic')}>
         {latinSharpsFlats ? tonic : formatSharpsFlats(tonic)}
       </span>

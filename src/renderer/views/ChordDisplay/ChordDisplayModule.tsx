@@ -3,7 +3,7 @@ import classnames from 'classnames/bind';
 
 import { useModuleSettings, useSettings } from 'renderer/contexts/Settings';
 import useNotes from 'renderer/hooks/useNotes';
-import { Notation, PianoKeyboard, ChordIntervals, ChordNameLink } from 'renderer/components';
+import { Notation, PianoKeyboard, ChordIntervals, ChordNameLink, FunctionalChordSymbol } from 'renderer/components';
 
 import styles from './ChordDisplay.module.scss';
 
@@ -46,8 +46,15 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
     displayNotation,
     displayAltChords,
     displayIntervals,
+    displayFunctionalChord,
+    functionalKey,
+    functionalMode,
     keyboard,
   } = moduleSettings;
+
+  // Determine the effective key tonic for functional analysis.
+  // Per-module functionalKey overrides the global notation.key.
+  const effectiveFunctionalKey = functionalKey || key || null;
 
   return (
     <div id="chordDisplay" className={cx('base')}>
@@ -69,6 +76,16 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
                 chord={chords[0]}
                 notation={chordNotation}
                 highlightAlterations={highlightAlterations}
+              />
+            </div>
+          )}
+          {displayFunctionalChord && (
+            <div id="functionalChord" className={cx('functionalChord')}>
+              <FunctionalChordSymbol
+                chord={chords[0]}
+                keyTonic={effectiveFunctionalKey}
+                keyMode={functionalMode}
+                showKey
               />
             </div>
           )}
