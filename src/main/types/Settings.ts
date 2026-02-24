@@ -1,10 +1,10 @@
 export type KeyboardSettings = {
-  skin: 'classic' | 'flat';
+  skin: "classic" | "flat";
   from: string;
   to: string;
-  label: 'none' | 'pitchClass' | 'note' | 'chordNote' | 'interval';
-  keyName: 'none' | 'octave' | 'pitchClass' | 'note';
-  keyInfo: 'none' | 'tonic' | 'interval' | 'tonicAndInterval';
+  label: "none" | "pitchClass" | "note" | "chordNote" | "interval";
+  keyName: "none" | "octave" | "pitchClass" | "note";
+  keyInfo: "none" | "tonic" | "interval" | "tonicAndInterval";
   fadeOutDuration: number;
   textOpacity: number;
   displaySustained: boolean;
@@ -26,7 +26,7 @@ export type KeyboardSettings = {
 
 export type ChordDisplaySettings = {
   id: string;
-  chordNotation: 'long' | 'short' | 'symbol' | 'preferred';
+  chordNotation: "long" | "short" | "symbol" | "preferred";
   allowOmissions: boolean;
   useSustain: boolean;
   detectOnRelease: boolean;
@@ -37,23 +37,24 @@ export type ChordDisplaySettings = {
   displayNotation: boolean;
   displayAltChords: boolean;
   displayIntervals: boolean;
+  displayFunctional: boolean;
   keyboard: KeyboardSettings;
 };
 
 export type ChordQuizSettings = {
-  mode: 'random' | 'randomInKey';
+  mode: "random" | "randomInKey";
   difficulty: 0 | 1 | 2 | 3 | 4 | 5;
   gameLength: number;
   gamification: boolean;
-  chordNotation: 'long' | 'short' | 'symbol' | 'preferred';
+  chordNotation: "long" | "short" | "symbol" | "preferred";
   displayName: boolean;
   displayReaction: boolean;
   displayIntervals: boolean;
 };
 
 export type CircleOfFifthsSettings = {
-  scale: 'major' | 'minor';
-  highlightSector: 'chord' | 'notes';
+  scale: "major" | "minor";
+  highlightSector: "chord" | "notes";
   highlightInScale: boolean;
   displayMajor: boolean;
   displayMinor: boolean;
@@ -67,19 +68,20 @@ export type CircleOfFifthsSettings = {
 };
 
 export type ChordDictionarySettings = {
-  interactive: 'detect' | 'play';
+  interactive: "detect" | "play";
   hideDisabled: boolean;
   filterInKey: boolean;
-  groupBy: 'none' | 'quality' | 'intervals';
-  defaultNotation: 'long' | 'short' | 'symbol';
+  groupBy: "none" | "quality" | "intervals";
+  defaultNotation: "long" | "short" | "symbol";
   disabled: string[];
   aliases: Array<[key: string, value: string]>;
 };
 
 export type NotationSettings = {
   key: string;
-  accidentals: 'flat' | 'sharp';
-  staffClef: 'both' | 'bass' | 'treble';
+  mode: "major" | "minor";
+  accidentals: "flat" | "sharp";
+  staffClef: "both" | "bass" | "treble";
   staffTranspose: number;
 };
 

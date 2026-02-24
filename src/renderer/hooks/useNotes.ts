@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useReducer } from 'react';
-import { Note, Chord, Interval } from 'tonal';
+import { useCallback, useEffect, useReducer } from "react";
+import { Note, Chord, Interval } from "tonal";
 
-import { MidiMessage } from 'main/types';
+import { MidiMessage } from "main/types";
 import {
   getMidiChannel,
   getMidiCommand,
@@ -11,11 +11,11 @@ import {
   getNoteInKeySignature,
   KeySignatureConfig,
   tokenizeChord,
-} from 'renderer/helpers';
+} from "renderer/helpers";
 
-import { detect } from 'renderer/helpers/chord-detect';
+import { detect } from "renderer/helpers/chord-detect";
 
-import useMidiMessage from './useMidiMessage';
+import useMidiMessage from "./useMidiMessage";
 
 const MIDI_CMD_NOTE_OFF = 0x80;
 const MIDI_CMD_NOTE_ON = 0x90;
@@ -41,10 +41,10 @@ const getChords = (
   notes: string[],
   keySignatureNotes: string[],
   allowOmissions: boolean,
-  disabledChords: string[] = []
+  disabledChords: string[] = [],
 ) => {
   const chords = detect(notes, { allowOmissions, disabledChords }).map((n) =>
-    getChordInfo(n, keySignatureNotes)
+    getChordInfo(n, keySignatureNotes),
   );
 
   return chords;
@@ -53,8 +53,9 @@ const getChords = (
 const midiSortCompareFn = (a: number, b: number) => a - b;
 
 interface Parameters {
-  accidentals: 'flat' | 'sharp';
+  accidentals: "flat" | "sharp";
   key: string;
+  mode: "major" | "minor";
   midiChannel: number;
   allowOmissions: boolean;
   useSustain: boolean;
@@ -63,10 +64,10 @@ interface Parameters {
 }
 
 enum MidiActionTypes {
-  NOTE_ON = 'NOTE_ON',
-  NOTE_OFF = 'NOTE_OFF',
-  SUSTAIN_ON = 'SUSTAIN_ON',
-  SUSTAIN_OFF = 'SUSTAIN_OFF',
+  NOTE_ON = "NOTE_ON",
+  NOTE_OFF = "NOTE_OFF",
+  SUSTAIN_ON = "SUSTAIN_ON",
+  SUSTAIN_OFF = "SUSTAIN_OFF",
 }
 
 interface MidiAction {
@@ -75,11 +76,11 @@ interface MidiAction {
 }
 
 enum ParametersActionTypes {
-  KEY_SIGNATURE_CHANGED = 'KEY_SIGNATURE_CHANGED',
-  ALLOW_OMISSIONS_CHANGED = 'ALLOW_OMISSIONS_CHANGED',
-  USE_SUSTAIN_CHANGED = 'USE_SUSTAIN_CHANGED',
-  DETECT_ON_RELEASE_CHANGED = 'DETECT_ON_RELEASE_CHANGED',
-  DISABLED_CHORDS_CHANGED = 'DISABLED_CHORDS_CHANGED',
+  KEY_SIGNATURE_CHANGED = "KEY_SIGNATURE_CHANGED",
+  ALLOW_OMISSIONS_CHANGED = "ALLOW_OMISSIONS_CHANGED",
+  USE_SUSTAIN_CHANGED = "USE_SUSTAIN_CHANGED",
+  DETECT_ON_RELEASE_CHANGED = "DETECT_ON_RELEASE_CHANGED",
+  DISABLED_CHORDS_CHANGED = "DISABLED_CHORDS_CHANGED",
 }
 
 interface ParametersAction {
@@ -111,20 +112,21 @@ function reducer(state: State, action: Action): State {
 
   const { notes: keySignatureNotes } = state.params.keySignature;
 
-  const fromMidi = (m: number) => getNoteInKeySignature(Note.fromMidi(m), keySignatureNotes);
+  const fromMidi = (m: number) =>
+    getNoteInKeySignature(Note.fromMidi(m), keySignatureNotes);
 
   switch (type) {
     case ParametersActionTypes.KEY_SIGNATURE_CHANGED: {
       const keySignature = action.value as typeof state.params.keySignature;
       const notes = state.midiNotes.map((m: number) =>
-        getNoteInKeySignature(Note.fromMidi(m), keySignature.notes)
+        getNoteInKeySignature(Note.fromMidi(m), keySignature.notes),
       );
       const pitchClasses = notes.map(Note.pitchClass);
       const chords = getChords(
         notes,
         keySignature.notes,
         state.params.allowOmissions,
-        state.params.disabledChords
+        state.params.disabledChords,
       );
 
       return {
@@ -144,7 +146,7 @@ function reducer(state: State, action: Action): State {
         state.notes,
         keySignatureNotes,
         allowOmissions,
-        state.params.disabledChords
+        state.params.disabledChords,
       );
 
       return {
@@ -162,7 +164,7 @@ function reducer(state: State, action: Action): State {
         state.notes,
         keySignatureNotes,
         state.params.allowOmissions,
-        disabledChords
+        disabledChords,
       );
 
       return {
@@ -186,7 +188,7 @@ function reducer(state: State, action: Action): State {
           notes,
           keySignatureNotes,
           state.params.allowOmissions,
-          state.params.disabledChords
+          state.params.disabledChords,
         );
 
         return {
@@ -215,7 +217,9 @@ function reducer(state: State, action: Action): State {
     case MidiActionTypes.NOTE_ON: {
       const { midi } = action;
       const playedMidiNotes = [...state.playedMidiNotes, midi];
-      const sustainedMidiNotes = state.sustainedMidiNotes.filter((m) => m !== midi);
+      const sustainedMidiNotes = state.sustainedMidiNotes.filter(
+        (m) => m !== midi,
+      );
       const midiNotes = [...sustainedMidiNotes, ...playedMidiNotes];
       midiNotes.sort(midiSortCompareFn);
       const notes = midiNotes.map(fromMidi);
@@ -224,7 +228,7 @@ function reducer(state: State, action: Action): State {
         notes,
         keySignatureNotes,
         state.params.allowOmissions,
-        state.params.disabledChords
+        state.params.disabledChords,
       );
 
       return {
@@ -252,7 +256,7 @@ function reducer(state: State, action: Action): State {
             notes,
             keySignatureNotes,
             state.params.allowOmissions,
-            state.params.disabledChords
+            state.params.disabledChords,
           )
         : state.chords;
 
@@ -293,7 +297,7 @@ function reducer(state: State, action: Action): State {
             notes,
             keySignatureNotes,
             state.params.allowOmissions,
-            state.params.disabledChords
+            state.params.disabledChords,
           )
         : state.chords;
 
@@ -315,7 +319,7 @@ function reducer(state: State, action: Action): State {
 
 const defaultState: State = {
   params: {
-    keySignature: getKeySignature('C'),
+    keySignature: getKeySignature("C"),
     allowOmissions: false,
     useSustain: true,
     detectOnRelease: true,
@@ -331,8 +335,9 @@ const defaultState: State = {
 };
 
 export default function useNotes({
-  accidentals = 'flat',
-  key = 'C',
+  accidentals = "flat",
+  key = "C",
+  mode = "major",
   midiChannel = MIDI_CHANNEL_ALL,
   allowOmissions = false,
   disabledChords = undefined,
@@ -342,7 +347,7 @@ export default function useNotes({
   const [state, dispatch] = useReducer(reducer, {
     ...defaultState,
     params: {
-      keySignature: getKeySignature(key, accidentals === 'sharp'),
+      keySignature: getKeySignature(key, accidentals === "sharp", mode),
       allowOmissions,
       useSustain,
       detectOnRelease,
@@ -353,9 +358,9 @@ export default function useNotes({
   useEffect(() => {
     dispatch({
       type: ParametersActionTypes.KEY_SIGNATURE_CHANGED,
-      value: getKeySignature(key, accidentals === 'sharp'),
+      value: getKeySignature(key, accidentals === "sharp", mode),
     });
-  }, [accidentals, key]);
+  }, [accidentals, key, mode]);
 
   useEffect(() => {
     dispatch({
@@ -401,7 +406,8 @@ export default function useNotes({
       }
 
       if (
-        (cmd === MIDI_CMD_NOTE_OFF || (cmd === MIDI_CMD_NOTE_ON && value === 0)) && // MIDI RUNNING MODE => ALWAYS NOTE_ON messages with velocity 0
+        (cmd === MIDI_CMD_NOTE_OFF ||
+          (cmd === MIDI_CMD_NOTE_ON && value === 0)) && // MIDI RUNNING MODE => ALWAYS NOTE_ON messages with velocity 0
         (midiChannel === MIDI_CHANNEL_ALL || midiChannel === ch)
       ) {
         dispatch({ type: MidiActionTypes.NOTE_OFF, midi });
@@ -420,7 +426,7 @@ export default function useNotes({
         }
       }
     },
-    [midiChannel, dispatch]
+    [midiChannel, dispatch],
   );
 
   useMidiMessage(onMidiMessage);

@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
-import classnames from 'classnames/bind';
+import React, { useCallback } from "react";
+import classnames from "classnames/bind";
 
-import { useSettings } from 'renderer/contexts/Settings';
-import useNotes from 'renderer/hooks/useNotes';
-import { CircleFifths, ChordName } from 'renderer/components';
+import { useSettings } from "renderer/contexts/Settings";
+import useNotes from "renderer/hooks/useNotes";
+import { CircleFifths, ChordName } from "renderer/components";
 
-import styles from './CircleOfFifths.module.scss';
+import styles from "./CircleOfFifths.module.scss";
 
 const cx = classnames.bind(styles);
 
@@ -16,13 +16,14 @@ type Props = {
 const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
   const { settings, updateSetting } = useSettings();
 
-  const { key } = settings.notation;
+  const { key, mode } = settings.notation;
   const {
     chords,
     pitchClasses,
     params: { keySignature },
   } = useNotes({
     key,
+    mode,
     midiChannel: 0,
     disabledChords: settings.chordDictionary.disabled,
   });
@@ -31,7 +32,7 @@ const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
     (newKey: string) => {
       return updateSetting(`notation.key`, newKey);
     },
-    [updateSetting]
+    [updateSetting],
   );
 
   if (!settings) return null;
@@ -39,7 +40,7 @@ const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
   const config = settings.circleOfFifths;
 
   return (
-    <div className={cx('base')}>
+    <div className={cx("base")}>
       <CircleFifths
         keySignature={keySignature}
         chord={chords[0]}
@@ -47,7 +48,7 @@ const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
         onChange={disableUpdate ? undefined : handleKeyChange}
         config={config}
       >
-        <div id="chord" className={cx('chord')}>
+        <div id="chord" className={cx("chord")}>
           <ChordName chord={chords[0]} hideRoot />
         </div>
       </CircleFifths>

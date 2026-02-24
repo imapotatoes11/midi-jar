@@ -2,80 +2,80 @@ export const fields = {
   accidentals: {
     choices: [
       {
-        value: 'flat',
-        label: 'flat - ♭',
+        value: "flat",
+        label: "flat - ♭",
       },
       {
-        value: 'sharp',
-        label: 'sharp - ♯',
+        value: "sharp",
+        label: "sharp - ♯",
       },
     ],
   },
   staffClef: {
     choices: [
       {
-        value: 'both',
-        label: 'Bass 𝄢 + Treble 𝄞',
+        value: "both",
+        label: "Bass 𝄢 + Treble 𝄞",
       },
       {
-        value: 'bass',
-        label: 'Bass 𝄢',
+        value: "bass",
+        label: "Bass 𝄢",
       },
       {
-        value: 'treble',
-        label: 'Treble  𝄞',
+        value: "treble",
+        label: "Treble  𝄞",
       },
     ],
   },
   keySignature: {
     choices: [
       {
-        value: 'C',
-        label: 'C major / A minor',
+        value: "C",
+        label: "C",
       },
       {
-        value: 'G',
-        label: 'G major / E minor (5♯)',
+        value: "G",
+        label: "G",
       },
       {
-        value: 'D',
-        label: 'D major / B minor (2♯)',
+        value: "D",
+        label: "D",
       },
       {
-        value: 'A',
-        label: 'A major / F♯ minor (3♯)',
+        value: "A",
+        label: "A",
       },
       {
-        value: 'E',
-        label: 'E major / C♯ minor (4♯)',
+        value: "E",
+        label: "E",
       },
       {
-        value: 'B',
-        label: 'B major / G♯ minor (5♯)',
+        value: "B",
+        label: "B",
       },
       {
-        value: 'F#',
-        label: 'F♯ major / D♯ minor (6♯)',
+        value: "F#",
+        label: "F♯",
       },
       {
-        value: 'Db',
-        label: 'Db major / B♭ minor (5♭)',
+        value: "Db",
+        label: "D♭",
       },
       {
-        value: 'Ab',
-        label: 'A♭ major / F minor (4♭)',
+        value: "Ab",
+        label: "A♭",
       },
       {
-        value: 'Eb',
-        label: 'E♭ major / C minor (3♭)',
+        value: "Eb",
+        label: "E♭",
       },
       {
-        value: 'Bb',
-        label: 'B♭ major / G minor (2♭)',
+        value: "Bb",
+        label: "B♭",
       },
       {
-        value: 'F',
-        label: 'F major / D minor (1♭)',
+        value: "F",
+        label: "F",
       },
     ],
   },

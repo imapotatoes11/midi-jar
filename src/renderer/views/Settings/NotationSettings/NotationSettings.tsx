@@ -1,10 +1,16 @@
-import React from 'react';
-import { Container, Select, Slider, FormControlLabel, FormField } from '@la-jarre-a-son/ui';
+import React from "react";
+import {
+  Container,
+  Select,
+  Slider,
+  FormControlLabel,
+  FormField,
+} from "@la-jarre-a-son/ui";
 
-import { useSettings } from 'renderer/contexts/Settings';
-import { InputNote } from 'renderer/components';
+import { useSettings } from "renderer/contexts/Settings";
+import { InputNote } from "renderer/components";
 
-import { fields } from './constants';
+import { fields } from "./constants";
 
 const NotationSettings: React.FC = () => {
   const { settings, updateSetting } = useSettings();
@@ -13,26 +19,37 @@ const NotationSettings: React.FC = () => {
     <Container size="md">
       <FormControlLabel label="Key Signature" reverse>
         <InputNote
-          onChange={(value: string) => updateSetting('notation.key', value)}
+          onChange={(value: string) => updateSetting("notation.key", value)}
           value={settings.notation.key}
           type="text"
           learn
         />
       </FormControlLabel>
 
+      <FormControlLabel label="Mode" reverse>
+        <Select
+          options={[
+            { value: "major", label: "Major" },
+            { value: "minor", label: "Minor" },
+          ]}
+          onChange={(value) => updateSetting("notation.mode", value)}
+          value={settings.notation.mode}
+        />
+      </FormControlLabel>
+
       <FormControlLabel label="Accidentals (in C)" reverse>
         <Select
           options={fields.accidentals.choices}
-          onChange={(value) => updateSetting('notation.accidentals', value)}
+          onChange={(value) => updateSetting("notation.accidentals", value)}
           value={settings.notation.accidentals}
-          disabled={settings.notation.key !== 'C'}
+          disabled={settings.notation.key !== "C"}
         />
       </FormControlLabel>
 
       <FormControlLabel label="Staff Clef" reverse>
         <Select
           options={fields.staffClef.choices}
-          onChange={(value) => updateSetting('notation.staffClef', value)}
+          onChange={(value) => updateSetting("notation.staffClef", value)}
           value={settings.notation.staffClef}
         />
       </FormControlLabel>
@@ -43,7 +60,9 @@ const NotationSettings: React.FC = () => {
       >
         <Slider
           value={settings.notation.staffTranspose}
-          onChange={(value: number) => updateSetting('notation.staffTranspose', value)}
+          onChange={(value: number) =>
+            updateSetting("notation.staffTranspose", value)
+          }
           min={-24}
           max={24}
           step={1}

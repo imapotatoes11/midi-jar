@@ -5,16 +5,16 @@ import {
   CircleOfFifthsSettings,
   KeyboardSettings,
   NotationSettings,
-} from 'main/types';
-import { StoreType } from '../types/Store';
+} from "main/types";
+import { StoreType } from "../types/Store";
 
 export const defaultKeyboardSettings: KeyboardSettings = {
-  skin: 'classic' as const,
-  from: 'C3',
-  to: 'C5',
-  label: 'pitchClass',
-  keyName: 'note',
-  keyInfo: 'tonicAndInterval',
+  skin: "classic" as const,
+  from: "C3",
+  to: "C5",
+  label: "pitchClass",
+  keyName: "note",
+  keyInfo: "tonicAndInterval",
   fadeOutDuration: 0,
   textOpacity: 0.5,
   displaySustained: true,
@@ -26,17 +26,17 @@ export const defaultKeyboardSettings: KeyboardSettings = {
     bevel: true,
   },
   colors: {
-    white: '#ffffff',
-    black: '#000000',
-    played: '#315bce',
-    wrapped: '#1d367b',
-    sustained: '#808080',
+    white: "#ffffff",
+    black: "#000000",
+    played: "#315bce",
+    wrapped: "#1d367b",
+    sustained: "#808080",
   },
 };
 
 export const defaultChordDisplaySettings: ChordDisplaySettings = {
-  id: 'default',
-  chordNotation: 'preferred',
+  id: "default",
+  chordNotation: "preferred",
   allowOmissions: true,
   useSustain: true,
   detectOnRelease: true,
@@ -47,23 +47,24 @@ export const defaultChordDisplaySettings: ChordDisplaySettings = {
   displayNotation: false,
   displayAltChords: true,
   displayIntervals: false,
+  displayFunctional: true,
   keyboard: defaultKeyboardSettings,
 };
 
 export const defaultChordQuizSettings: ChordQuizSettings = {
-  mode: 'random' as const,
+  mode: "random" as const,
   difficulty: 0 as const,
   gameLength: 16,
   gamification: true,
-  chordNotation: 'preferred',
+  chordNotation: "preferred",
   displayName: true,
   displayReaction: true,
   displayIntervals: true,
 };
 
 export const defaultCircleOfFifthsSettings: CircleOfFifthsSettings = {
-  scale: 'major' as const,
-  highlightSector: 'chord' as const,
+  scale: "major" as const,
+  highlightSector: "chord" as const,
   highlightInScale: true,
   displayMajor: true,
   displayMinor: true,
@@ -77,19 +78,20 @@ export const defaultCircleOfFifthsSettings: CircleOfFifthsSettings = {
 };
 
 export const defaultChordDictionarySettings: ChordDictionarySettings = {
-  interactive: 'play',
+  interactive: "play",
   hideDisabled: false,
   filterInKey: false,
-  groupBy: 'none',
-  defaultNotation: 'short',
+  groupBy: "none",
+  defaultNotation: "short",
   disabled: [],
-  aliases: [['maj', '']],
+  aliases: [["maj", ""]],
 };
 
 export const defaultNotationSettings: NotationSettings = {
-  key: 'C',
-  accidentals: 'flat' as const,
-  staffClef: 'both' as const,
+  key: "C",
+  mode: "major" as const,
+  accidentals: "flat" as const,
+  staffClef: "both" as const,
   staffTranspose: 0,
 };
 
@@ -104,9 +106,9 @@ export const defaults: StoreType = {
     height: null,
     maximized: false,
     alwaysOnTop: false,
-    changelogDismissed: '100.0.0', // hack: ensure changelog does not blink at startup
+    changelogDismissed: "100.0.0", // hack: ensure changelog does not blink at startup
     updateDismissed: null,
-    path: '/',
+    path: "/",
   },
   settings: {
     general: {

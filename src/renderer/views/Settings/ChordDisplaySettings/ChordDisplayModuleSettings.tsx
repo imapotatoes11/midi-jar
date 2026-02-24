@@ -1,7 +1,7 @@
-import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { useModuleSettings } from 'renderer/contexts/Settings';
+import { useModuleSettings } from "renderer/contexts/Settings";
 
 import {
   Container,
@@ -14,11 +14,16 @@ import {
   StackSeparator,
   Slider,
   FormField,
-} from '@la-jarre-a-son/ui';
+} from "@la-jarre-a-son/ui";
 
-import { Icon, InputColor, InputNote, ScrollContainer } from 'renderer/components';
+import {
+  Icon,
+  InputColor,
+  InputNote,
+  ScrollContainer,
+} from "renderer/components";
 
-import { fields } from './utils';
+import { fields } from "./utils";
 
 type Props = {
   parentPath: string;
@@ -27,8 +32,12 @@ type Props = {
 const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
   const navigate = useNavigate();
   const { moduleId } = useParams();
-  const { moduleSettings, updateModuleSetting, resetModuleSettings, deleteModule } =
-    useModuleSettings('chordDisplay', moduleId ?? '');
+  const {
+    moduleSettings,
+    updateModuleSetting,
+    resetModuleSettings,
+    deleteModule,
+  } = useModuleSettings("chordDisplay", moduleId ?? "");
 
   const handleDeleteModule = () => {
     deleteModule();
@@ -46,7 +55,7 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayChord', value)}
+                onChange={(value) => updateModuleSetting("displayChord", value)}
                 checked={moduleSettings.displayChord}
               />
             </FormControlLabel>
@@ -57,7 +66,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayAltChords', value)}
+                onChange={(value) =>
+                  updateModuleSetting("displayAltChords", value)
+                }
                 checked={moduleSettings.displayAltChords}
               />
             </FormControlLabel>
@@ -68,7 +79,7 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayName', value)}
+                onChange={(value) => updateModuleSetting("displayName", value)}
                 checked={moduleSettings.displayName}
               />
             </FormControlLabel>
@@ -80,7 +91,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             >
               <Select
                 value={moduleSettings.chordNotation}
-                onChange={(value) => updateModuleSetting('chordNotation', value)}
+                onChange={(value) =>
+                  updateModuleSetting("chordNotation", value)
+                }
                 options={fields.chordNotation.choices}
               />
             </FormControlLabel>
@@ -91,7 +104,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('highlightAlterations', value)}
+                onChange={(value) =>
+                  updateModuleSetting("highlightAlterations", value)
+                }
                 checked={moduleSettings.highlightAlterations}
               />
             </FormControlLabel>
@@ -102,7 +117,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('allowOmissions', value)}
+                onChange={(value) =>
+                  updateModuleSetting("allowOmissions", value)
+                }
                 checked={moduleSettings.allowOmissions}
               />
             </FormControlLabel>
@@ -113,7 +130,7 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('useSustain', value)}
+                onChange={(value) => updateModuleSetting("useSustain", value)}
                 checked={moduleSettings.useSustain}
               />
             </FormControlLabel>
@@ -124,7 +141,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('detectOnRelease', value)}
+                onChange={(value) =>
+                  updateModuleSetting("detectOnRelease", value)
+                }
                 checked={moduleSettings.detectOnRelease}
               />
             </FormControlLabel>
@@ -137,7 +156,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayNotation', value)}
+                onChange={(value) =>
+                  updateModuleSetting("displayNotation", value)
+                }
                 checked={moduleSettings.displayNotation}
               />
             </FormControlLabel>
@@ -148,8 +169,23 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayIntervals', value)}
+                onChange={(value) =>
+                  updateModuleSetting("displayIntervals", value)
+                }
                 checked={moduleSettings.displayIntervals}
+              />
+            </FormControlLabel>
+
+            <FormControlLabel
+              label="Display Functional Symbol"
+              hint="Shows Roman numeral analysis (e.g., I, V65, ii) based on current key and mode"
+              reverse
+            >
+              <Switch
+                onChange={(value) =>
+                  updateModuleSetting("displayFunctional", value)
+                }
+                checked={moduleSettings.displayFunctional}
               />
             </FormControlLabel>
           </FormFieldset>
@@ -161,23 +197,35 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('displayKeyboard', value)}
+                onChange={(value) =>
+                  updateModuleSetting("displayKeyboard", value)
+                }
                 checked={moduleSettings.displayKeyboard}
               />
             </FormControlLabel>
 
-            <FormControlLabel label="Note Start" hint="First note of keyboard" reverse>
+            <FormControlLabel
+              label="Note Start"
+              hint="First note of keyboard"
+              reverse
+            >
               <InputNote
-                onChange={(value) => updateModuleSetting('keyboard.from', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.from", value)
+                }
                 value={moduleSettings.keyboard.from}
                 withOctave
                 learn
               />
             </FormControlLabel>
 
-            <FormControlLabel label="Note End" hint="Last note of keyboard" reverse>
+            <FormControlLabel
+              label="Note End"
+              hint="Last note of keyboard"
+              reverse
+            >
               <InputNote
-                onChange={(value) => updateModuleSetting('keyboard.to', value)}
+                onChange={(value) => updateModuleSetting("keyboard.to", value)}
                 value={moduleSettings.keyboard.to}
                 withOctave
                 learn
@@ -190,7 +238,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('keyboard.wrap', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.wrap", value)
+                }
                 checked={moduleSettings.keyboard.wrap}
               />
             </FormControlLabel>
@@ -201,15 +251,23 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               reverse
             >
               <Switch
-                onChange={(value) => updateModuleSetting('keyboard.displaySustained', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.displaySustained", value)
+                }
                 checked={moduleSettings.keyboard.displaySustained}
               />
             </FormControlLabel>
 
-            <FormControlLabel label="Key Names" hint="Choose what names to display on keys" reverse>
+            <FormControlLabel
+              label="Key Names"
+              hint="Choose what names to display on keys"
+              reverse
+            >
               <Select
                 value={moduleSettings.keyboard.keyName}
-                onChange={(value) => updateModuleSetting('keyboard.keyName', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.keyName", value)
+                }
                 options={fields.keyboard.keyName.choices}
               />
             </FormControlLabel>
@@ -221,7 +279,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             >
               <Select
                 value={moduleSettings.keyboard.keyInfo}
-                onChange={(value) => updateModuleSetting('keyboard.keyInfo', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.keyInfo", value)
+                }
                 options={fields.keyboard.keyInfo.choices}
               />
             </FormControlLabel>
@@ -233,15 +293,22 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             >
               <Select
                 value={moduleSettings.keyboard.label}
-                onChange={(value) => updateModuleSetting('keyboard.label', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.label", value)
+                }
                 options={fields.keyboard.label.choices}
               />
             </FormControlLabel>
 
-            <FormField label="Fade out duration" hint="Played keys will fade out when released">
+            <FormField
+              label="Fade out duration"
+              hint="Played keys will fade out when released"
+            >
               <Slider
                 value={moduleSettings.keyboard.fadeOutDuration}
-                onChange={(value: number) => updateModuleSetting('keyboard.fadeOutDuration', value)}
+                onChange={(value: number) =>
+                  updateModuleSetting("keyboard.fadeOutDuration", value)
+                }
                 min={0}
                 max={1}
                 step={0.1}
@@ -251,18 +318,29 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
           </FormFieldset>
 
           <FormFieldset label="Keyboard Skin">
-            <FormControlLabel label="Skin" hint="Choose the appearance of the keyboard" reverse>
+            <FormControlLabel
+              label="Skin"
+              hint="Choose the appearance of the keyboard"
+              reverse
+            >
               <Select
                 value={moduleSettings.keyboard.skin}
-                onChange={(value) => updateModuleSetting('keyboard.skin', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.skin", value)
+                }
                 options={fields.keyboard.skin.choices}
               />
             </FormControlLabel>
 
-            <FormField label="Text Opacity" hint="Factor of the black keys width">
+            <FormField
+              label="Text Opacity"
+              hint="Factor of the black keys width"
+            >
               <Slider
                 value={moduleSettings.keyboard.textOpacity}
-                onChange={(value: number) => updateModuleSetting('keyboard.textOpacity', value)}
+                onChange={(value: number) =>
+                  updateModuleSetting("keyboard.textOpacity", value)
+                }
                 min={0}
                 max={1}
                 step={0.1}
@@ -273,7 +351,9 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             <FormField label="Key Height" hint="Factor of the black keys width">
               <Slider
                 value={moduleSettings.keyboard.sizes.height}
-                onChange={(value: number) => updateModuleSetting('keyboard.sizes.height', value)}
+                onChange={(value: number) =>
+                  updateModuleSetting("keyboard.sizes.height", value)
+                }
                 min={1}
                 max={16}
                 step={0.1}
@@ -281,11 +361,16 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
               />
             </FormField>
 
-            {moduleSettings.keyboard.skin === 'classic' && (
-              <FormField label="Black Key Ratio" hint="Percentage of white keys height">
+            {moduleSettings.keyboard.skin === "classic" && (
+              <FormField
+                label="Black Key Ratio"
+                hint="Percentage of white keys height"
+              >
                 <Slider
                   value={moduleSettings.keyboard.sizes.ratio}
-                  onChange={(value: number) => updateModuleSetting('keyboard.sizes.ratio', value)}
+                  onChange={(value: number) =>
+                    updateModuleSetting("keyboard.sizes.ratio", value)
+                  }
                   min={0.1}
                   max={0.9}
                   step={0.025}
@@ -293,11 +378,13 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
                 />
               </FormField>
             )}
-            {moduleSettings.keyboard.skin === 'classic' && (
+            {moduleSettings.keyboard.skin === "classic" && (
               <FormField label="Key Border Radius">
                 <Slider
                   value={moduleSettings.keyboard.sizes.radius}
-                  onChange={(value: number) => updateModuleSetting('keyboard.sizes.radius', value)}
+                  onChange={(value: number) =>
+                    updateModuleSetting("keyboard.sizes.radius", value)
+                  }
                   min={0}
                   max={1}
                   step={0.05}
@@ -305,10 +392,16 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
                 />
               </FormField>
             )}
-            {moduleSettings.keyboard.skin === 'classic' && (
-              <FormControlLabel label="Key Bevel" hint="Adds a bevel gradient to keys" reverse>
+            {moduleSettings.keyboard.skin === "classic" && (
+              <FormControlLabel
+                label="Key Bevel"
+                hint="Adds a bevel gradient to keys"
+                reverse
+              >
                 <Switch
-                  onChange={(value) => updateModuleSetting('keyboard.sizes.bevel', value)}
+                  onChange={(value) =>
+                    updateModuleSetting("keyboard.sizes.bevel", value)
+                  }
                   checked={moduleSettings.keyboard.sizes.bevel}
                 />
               </FormControlLabel>
@@ -318,35 +411,45 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
           <FormFieldset label="Keyboard Colors">
             <FormControlLabel label="Black Keys" reverse>
               <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.black', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.colors.black", value)
+                }
                 value={moduleSettings.keyboard.colors.black}
               />
             </FormControlLabel>
 
             <FormControlLabel label="White Keys" reverse>
               <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.white', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.colors.white", value)
+                }
                 value={moduleSettings.keyboard.colors.white}
               />
             </FormControlLabel>
 
             <FormControlLabel label="Played Keys" reverse>
               <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.played', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.colors.played", value)
+                }
                 value={moduleSettings.keyboard.colors.played}
               />
             </FormControlLabel>
 
             <FormControlLabel label="Wrapped Keys" reverse>
               <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.wrapped', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.colors.wrapped", value)
+                }
                 value={moduleSettings.keyboard.colors.wrapped}
               />
             </FormControlLabel>
 
             <FormControlLabel label="Sustained Keys" reverse>
               <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.sustained', value)}
+                onChange={(value) =>
+                  updateModuleSetting("keyboard.colors.sustained", value)
+                }
                 value={moduleSettings.keyboard.colors.sustained}
               />
             </FormControlLabel>

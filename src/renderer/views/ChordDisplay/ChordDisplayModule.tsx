@@ -1,11 +1,17 @@
-import React from 'react';
-import classnames from 'classnames/bind';
+import React from "react";
+import classnames from "classnames/bind";
 
-import { useModuleSettings, useSettings } from 'renderer/contexts/Settings';
-import useNotes from 'renderer/hooks/useNotes';
-import { Notation, PianoKeyboard, ChordIntervals, ChordNameLink } from 'renderer/components';
+import { useModuleSettings, useSettings } from "renderer/contexts/Settings";
+import useNotes from "renderer/hooks/useNotes";
+import { analyzeFunctionalHarmony } from "renderer/helpers";
+import {
+  Notation,
+  PianoKeyboard,
+  ChordIntervals,
+  ChordNameLink,
+} from "renderer/components";
 
-import styles from './ChordDisplay.module.scss';
+import styles from "./ChordDisplay.module.scss";
 
 const cx = classnames.bind(styles);
 
@@ -15,9 +21,10 @@ type Props = {
 
 const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
   const { settings } = useSettings();
-  const { moduleSettings } = useModuleSettings('chordDisplay', moduleId);
+  const { moduleSettings } = useModuleSettings("chordDisplay", moduleId);
 
-  const { key, accidentals, staffClef, staffTranspose } = settings.notation;
+  const { key, accidentals, staffClef, staffTranspose, mode } =
+    settings.notation;
   const {
     midiNotes,
     pitchClasses,
@@ -28,12 +35,20 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
   } = useNotes({
     accidentals,
     key,
+    mode,
     midiChannel: 0,
     allowOmissions: moduleSettings.allowOmissions,
     useSustain: moduleSettings.useSustain,
     detectOnRelease: moduleSettings.detectOnRelease,
     disabledChords: settings.chordDictionary.disabled,
   });
+
+  const functionalAnalysis =
+    chords && chords[0]
+      ? analyzeFunctionalHarmony(keySignature, chords[0], pitchClasses)
+      : [];
+  const functionalSymbol =
+    functionalAnalysis.length > 0 ? functionalAnalysis[0].symbol : "—";
 
   if (!settings || !moduleSettings) return null;
 
@@ -46,25 +61,31 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
     displayNotation,
     displayAltChords,
     displayIntervals,
+    displayFunctional,
     keyboard,
   } = moduleSettings;
 
   return (
-    <div id="chordDisplay" className={cx('base')}>
-      <div id="container" className={cx('container')}>
+    <div id="chordDisplay" className={cx("base")}>
+      <div id="container" className={cx("container")}>
         {displayNotation && (
           <Notation
             id="notation"
-            className={cx('notation', { 'notation--withChord': displayChord })}
+            className={cx("notation", { "notation--withChord": displayChord })}
             midiNotes={midiNotes}
             keySignature={keySignature}
             staffClef={staffClef}
             staffTranspose={staffTranspose}
           />
         )}
-        <div id="display" className={cx('display')}>
+        <div id="display" className={cx("display")}>
           {displayChord && (
-            <div id="chord" className={cx('chord', { 'chord--withNotation': displayNotation })}>
+            <div
+              id="chord"
+              className={cx("chord", {
+                "chord--withNotation": displayNotation,
+              })}
+            >
               <ChordNameLink
                 chord={chords[0]}
                 notation={chordNotation}
@@ -72,13 +93,18 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
               />
             </div>
           )}
+          {displayFunctional && (
+            <div id="functional" className={cx("functional")}>
+              {functionalSymbol}
+            </div>
+          )}
           {displayName && (
-            <div id="name" className={cx('name')}>
+            <div id="name" className={cx("name")}>
               {chords[0] && chords[0].name}
             </div>
           )}
           {displayIntervals && (
-            <div id="intervals" className={cx('intervals')}>
+            <div id="intervals" className={cx("intervals")}>
               <ChordIntervals
                 intervals={chords[0]?.intervals}
                 pitchClasses={pitchClasses}
@@ -87,7 +113,7 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
             </div>
           )}
           {displayAltChords && (
-            <div id="alternativeChords" className={cx('alternativeChords')}>
+            <div id="alternativeChords" className={cx("alternativeChords")}>
               {chords.map((chord, index) =>
                 index > 0 ? (
                   <ChordNameLink
@@ -96,19 +122,19 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
                     notation={chordNotation}
                     highlightAlterations={highlightAlterations}
                   />
-                ) : null
+                ) : null,
               )}
             </div>
           )}
         </div>
       </div>
       {displayKeyboard && (
-        <div className={cx('piano')}>
+        <div className={cx("piano")}>
           <PianoKeyboard
             id="keyboard"
-            className={cx('keyboard', {
-              'keyboard--withNotation': displayNotation,
-              'keyboard--withChord': displayChord,
+            className={cx("keyboard", {
+              "keyboard--withNotation": displayNotation,
+              "keyboard--withChord": displayChord,
             })}
             sustained={sustainedMidiNotes}
             played={playedMidiNotes}

@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import classnames from 'classnames/bind';
-import { Chord, Note } from 'tonal';
-import { SidebarContainer } from '@la-jarre-a-son/ui';
+import React, { useCallback, useEffect, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import classnames from "classnames/bind";
+import { Chord, Note } from "tonal";
+import { SidebarContainer } from "@la-jarre-a-son/ui";
 
-import { useSettings } from 'renderer/contexts/Settings';
-import useNotes from 'renderer/hooks/useNotes';
-import { NOTE_NAMES, getNoteInKeySignature } from 'renderer/helpers';
+import { useSettings } from "renderer/contexts/Settings";
+import useNotes from "renderer/hooks/useNotes";
+import { NOTE_NAMES, getNoteInKeySignature } from "renderer/helpers";
 
-import ChordDictionaryChromaMenu from './ChordDictionaryChromaMenu';
-import ChordDictionaryChordMenu from './ChordDictionaryChordMenu';
-import ChordDictionaryToolbar from './ChordDictionaryToolbar';
-import ChordDictionaryModuleProvider from './ChordDictionaryModuleProvider';
+import ChordDictionaryChromaMenu from "./ChordDictionaryChromaMenu";
+import ChordDictionaryChordMenu from "./ChordDictionaryChordMenu";
+import ChordDictionaryToolbar from "./ChordDictionaryToolbar";
+import ChordDictionaryModuleProvider from "./ChordDictionaryModuleProvider";
 
-import styles from './ChordDictionary.module.scss';
+import styles from "./ChordDictionary.module.scss";
 
 const cx = classnames.bind(styles);
 
@@ -25,7 +25,7 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
   const { settings } = useSettings();
   const { chordName } = useParams();
 
-  const { key, accidentals } = settings.notation;
+  const { key, accidentals, mode } = settings.notation;
   const {
     chords,
     midiNotes,
@@ -36,6 +36,7 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
   } = useNotes({
     key,
     accidentals,
+    mode,
     midiChannel: 0,
     useSustain: true,
     detectOnRelease: false,
@@ -50,15 +51,15 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
   const navigateToChord = useCallback(
     (tonic: string | null, type: string | null) => {
       if (!tonic || type === null) {
-        navigate('./');
+        navigate("./");
       } else {
         const name = encodeURIComponent(
-          `${getNoteInKeySignature(tonic, keySignature.notes)}${type}`
+          `${getNoteInKeySignature(tonic, keySignature.notes)}${type}`,
         );
         navigate(`./${name}`);
       }
     },
-    [navigate, keySignature]
+    [navigate, keySignature],
   );
 
   const handleChromaChange = (newChroma: number) => {
@@ -77,7 +78,7 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
   };
 
   useEffect(() => {
-    if (settings.chordDictionary.interactive === 'detect') {
+    if (settings.chordDictionary.interactive === "detect") {
       if (chords[0] && chords[0].tonic) {
         navigateToChord(chords[0].tonic, chords[0].aliases[0]);
       }
@@ -104,7 +105,7 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
     >
       <ChordDictionaryToolbar disableUpdate={disableUpdate} />
       <SidebarContainer
-        className={cx('container')}
+        className={cx("container")}
         sidebar={
           <ChordDictionaryChromaMenu
             keySignature={keySignature}
@@ -113,14 +114,14 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
             filterChordsInKey={settings.chordDictionary.filterInKey}
           />
         }
-        sidebarProps={{ className: cx('pitchbar') }}
-        contentProps={{ className: cx('content') }}
+        sidebarProps={{ className: cx("pitchbar") }}
+        contentProps={{ className: cx("content") }}
         size="xs"
         open
         inset
       >
         <SidebarContainer
-          className={cx('container')}
+          className={cx("container")}
           sidebar={
             <ChordDictionaryChordMenu
               keySignature={keySignature}
@@ -133,8 +134,8 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
               filterChordsInKey={settings.chordDictionary.filterInKey}
             />
           }
-          sidebarProps={{ className: cx('chordbar') }}
-          contentProps={{ className: cx('content') }}
+          sidebarProps={{ className: cx("chordbar") }}
+          contentProps={{ className: cx("content") }}
           size="sm"
           open
           inset
