@@ -9,11 +9,135 @@
   position: relative;
 }
 
-// Optionally displayed key label ("Am:" prefix)
+// Key label shown above the Roman-numeral symbol ("C maj")
 .keyLabel {
   font-size: 0.6em;
   opacity: 0.55;
   letter-spacing: 0.04em;
+
+  // Clickable variant – rendered as a <button> when callbacks are provided
+  &--interactive {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    background: none;
+    border: none;
+    padding: 0.15em 0.4em;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    border-radius: 0.25em;
+    opacity: 0.65;
+    transition: opacity 0.12s ease, background 0.12s ease;
+
+    &:hover {
+      opacity: 0.9;
+      background: rgba($color-white, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 1px solid currentColor;
+    }
+  }
+}
+
+// Chevron that rotates when the picker is open
+.keyLabelChevron {
+  font-size: 0.8em;
+  display: inline-block;
+  transition: transform 0.15s ease;
+  line-height: 1;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+// -----------------------------------------------------------------------
+// Inline key + mode picker panel
+// -----------------------------------------------------------------------
+
+.keyPicker {
+  position: absolute;
+  bottom: calc(100% + 0.5em);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+
+  background: rgba($color-neutral-darker, 0.97);
+  border: 1px solid rgba($color-neutral-light, 0.22);
+  border-radius: 0.4em;
+  padding: 0.55em 0.7em;
+  box-shadow: 0 6px 20px rgba($color-black, 0.55);
+  min-width: 14em;
+}
+
+// Major / minor toggle row
+.keyPickerModes {
+  display: flex;
+  gap: 0.35em;
+}
+
+.modeBtn {
+  flex: 1;
+  background: none;
+  border: 1px solid rgba($color-neutral-light, 0.22);
+  border-radius: 0.3em;
+  padding: 0.25em 0.5em;
+  color: inherit;
+  font-size: 0.55em;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.1s ease, background 0.1s ease;
+
+  &:hover {
+    opacity: 0.85;
+    background: rgba($color-white, 0.06);
+  }
+
+  &--active {
+    opacity: 1;
+    background: rgba($color-white, 0.13);
+    border-color: rgba($color-neutral-light, 0.5);
+    font-weight: bold;
+  }
+}
+
+// 6-column grid of key buttons
+.keyPickerGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.2em;
+}
+
+.keyBtn {
+  background: none;
+  border: 1px solid rgba($color-neutral-light, 0.18);
+  border-radius: 0.25em;
+  padding: 0.2em 0.15em;
+  color: inherit;
+  font-size: 0.5em;
+  cursor: pointer;
+  opacity: 0.6;
+  text-align: center;
+  white-space: nowrap;
+  transition: opacity 0.1s ease, background 0.1s ease;
+
+  &:hover {
+    opacity: 1;
+    background: rgba($color-white, 0.08);
+  }
+
+  &--active {
+    opacity: 1;
+    background: rgba($color-white, 0.16);
+    border-color: rgba($color-neutral-light, 0.5);
+    font-weight: bold;
+  }
 }
 
 // The primary symbol button (transparent button for accessibility)

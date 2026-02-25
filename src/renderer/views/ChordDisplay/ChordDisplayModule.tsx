@@ -15,7 +15,7 @@ type Props = {
 
 const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
   const { settings } = useSettings();
-  const { moduleSettings } = useModuleSettings('chordDisplay', moduleId);
+  const { moduleSettings, updateModuleSetting } = useModuleSettings('chordDisplay', moduleId);
 
   const { key, accidentals, staffClef, staffTranspose } = settings.notation;
   const {
@@ -85,6 +85,8 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
                 chord={chords[0]}
                 keyTonic={effectiveFunctionalKey}
                 keyMode={functionalMode}
+                onKeyChange={(k) => updateModuleSetting('functionalKey', k)}
+                onModeChange={(m) => updateModuleSetting('functionalMode', m)}
                 showKey
               />
             </div>

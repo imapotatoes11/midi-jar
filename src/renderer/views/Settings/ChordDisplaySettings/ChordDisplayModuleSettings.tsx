@@ -133,7 +133,7 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
           <FormFieldset label="Functional Harmony">
             <FormControlLabel
               label="Display Functional Symbol"
-              hint="Show a Roman-numeral functional chord symbol (e.g. V7, ii, bVII, N6)"
+              hint="Show a Roman-numeral functional chord symbol (e.g. V7, ii, bVII, N6). Click the key label in the display to quickly switch key and mode."
               reverse
             >
               <Switch
@@ -141,34 +141,6 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
                 checked={moduleSettings.displayFunctionalChord}
               />
             </FormControlLabel>
-
-            {moduleSettings.displayFunctionalChord && (
-              <>
-                <FormControlLabel
-                  label="Functional Key"
-                  hint="Key tonic for functional analysis. Leave empty to use the global notation key."
-                  reverse
-                >
-                  <InputNote
-                    onChange={(value) => updateModuleSetting('functionalKey', value)}
-                    value={moduleSettings.functionalKey}
-                    type="text"
-                  />
-                </FormControlLabel>
-
-                <FormControlLabel
-                  label="Key Mode"
-                  hint="Major or minor mode for Roman numeral analysis"
-                  reverse
-                >
-                  <Select
-                    value={moduleSettings.functionalMode}
-                    onChange={(value) => updateModuleSetting('functionalMode', value)}
-                    options={fields.functionalMode.choices}
-                  />
-                </FormControlLabel>
-              </>
-            )}
           </FormFieldset>
 
           <FormFieldset label="Additional Info">
