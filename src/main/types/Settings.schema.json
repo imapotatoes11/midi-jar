@@ -84,6 +84,13 @@
                     "displayFunctionalChord": {
                         "type": "boolean"
                     },
+                    "functionalMode": {
+                        "enum": [
+                            "major",
+                            "minor"
+                        ],
+                        "type": "string"
+                    },
                     "displayIntervals": {
                         "type": "boolean"
                     },
@@ -95,16 +102,6 @@
                     },
                     "displayNotation": {
                         "type": "boolean"
-                    },
-                    "functionalKey": {
-                        "type": "string"
-                    },
-                    "functionalMode": {
-                        "enum": [
-                            "major",
-                            "minor"
-                        ],
-                        "type": "string"
                     },
                     "highlightAlterations": {
                         "type": "boolean"

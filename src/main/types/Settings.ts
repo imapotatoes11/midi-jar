@@ -39,12 +39,7 @@ export type ChordDisplaySettings = {
   displayIntervals: boolean;
   /** Show Roman-numeral functional harmony symbol (e.g. V7, ii, bVII) */
   displayFunctionalChord: boolean;
-  /**
-   * Key tonic for functional analysis. Empty string = inherit from notation.key.
-   * E.g. "C", "Bb", "F#"
-   */
-  functionalKey: string;
-  /** Mode for functional analysis */
+  /** Mode for functional analysis (major or minor). Resets to major when notation.key changes.) */
   functionalMode: 'major' | 'minor';
   keyboard: KeyboardSettings;
 };

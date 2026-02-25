@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import classnames from 'classnames/bind';
 
 import { useModuleSettings, useSettings } from 'renderer/contexts/Settings';
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
-  const { settings } = useSettings();
+  const { settings, updateSetting } = useSettings();
   const { moduleSettings, updateModuleSetting } = useModuleSettings('chordDisplay', moduleId);
 
   const { key, accidentals, staffClef, staffTranspose } = settings.notation;
@@ -35,6 +35,16 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
     disabledChords: settings.chordDictionary.disabled,
   });
 
+  // When the global key changes (from either the bottom-left selector or the inline key picker),
+  // reset this module's functional mode to major so the display is sensible by default.
+  const prevKeyRef = useRef(key);
+  useEffect(() => {
+    if (prevKeyRef.current !== key) {
+      prevKeyRef.current = key;
+      updateModuleSetting('functionalMode', 'major');
+    }
+  }, [key, updateModuleSetting]);
+
   if (!settings || !moduleSettings) return null;
 
   const {
@@ -47,14 +57,9 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
     displayAltChords,
     displayIntervals,
     displayFunctionalChord,
-    functionalKey,
     functionalMode,
     keyboard,
   } = moduleSettings;
-
-  // Determine the effective key tonic for functional analysis.
-  // Per-module functionalKey overrides the global notation.key.
-  const effectiveFunctionalKey = functionalKey || key || null;
 
   return (
     <div id="chordDisplay" className={cx('base')}>
@@ -83,9 +88,9 @@ const ChordDisplayModule: React.FC<Props> = ({ moduleId }) => {
             <div id="functionalChord" className={cx('functionalChord')}>
               <FunctionalChordSymbol
                 chord={chords[0]}
-                keyTonic={effectiveFunctionalKey}
+                keyTonic={key}
                 keyMode={functionalMode}
-                onKeyChange={(k) => updateModuleSetting('functionalKey', k)}
+                onKeyChange={(k) => updateSetting('notation.key', k)}
                 onModeChange={(m) => updateModuleSetting('functionalMode', m)}
                 showKey
               />
